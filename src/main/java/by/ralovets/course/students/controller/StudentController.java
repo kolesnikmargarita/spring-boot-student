@@ -1,6 +1,7 @@
 package by.ralovets.course.students.controller;
 
-import by.ralovets.course.students.exception.EntityNotFoundException;
+import by.ralovets.course.students.mapper.StudentMapper;
+import by.ralovets.course.students.model.Student;
 import by.ralovets.course.students.model.StudentDTO;
 import by.ralovets.course.students.service.StudentService;
 import jakarta.validation.Valid;
@@ -41,13 +42,21 @@ public class StudentController {
     }
 
     @GetMapping("/new")
-    public String createStudent(@ModelAttribute StudentDTO student) {
+    public String createStudent(@ModelAttribute Student student) {
         return "students/new";
     }
 
+    @PostMapping("/new")
+    public String handleStudentCreation(@Valid @ModelAttribute Student student, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "students/new";
+        }
+        final StudentMapper mapper = new StudentMapper();
+        studentService.save(mapper.toDTO(student));
+        return "redirect:/students";
+    }
 
-
-    /*@GetMapping("/update/{id}")
+    @GetMapping("/update/{id}")
     public String updateStudent(@PathVariable Long id, Model model) {
         final StudentDTO student = studentService.findStudentById(id);
 
@@ -58,7 +67,18 @@ public class StudentController {
         model.addAttribute("formattedDate", formattedDate);
 
         return "students/update";
-    }*/
+    }
 
+    @PutMapping("/{id}")
+    public String handleStudentUpdate(
+            @PathVariable Long id,
+            @Valid @ModelAttribute StudentDTO student,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors())
+            return "students/update";
 
+        studentService.update(id, student);
+        return "redirect:/students";
+    }
 }

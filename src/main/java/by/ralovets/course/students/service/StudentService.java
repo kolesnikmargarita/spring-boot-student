@@ -48,5 +48,42 @@ public class StudentService {
         throw new EntityNotFoundException("Студента с ID " + id + " не существует!");
     }
 
+    public void save(StudentDTO studentDTO) {
+        final Student student = studentMapper.toEntity(studentDTO);
 
+        sessionFactory.inTransaction(session -> {
+            session.persist(student);
+        });
+    }
+
+    public void deleteById(Long id) {
+        sessionFactory.inTransaction(session -> {
+            MutationQuery query = session.createMutationQuery("delete from Student s where s.id = :id");
+
+            query.setParameter("id", id);
+
+            query.executeUpdate();
+        });
+    }
+
+    public void update(Long id, StudentDTO student) {
+        sessionFactory.inTransaction(session -> {
+            MutationQuery query = session.createMutationQuery("""
+
+                    update Student s set s.name = :name,
+                    s.lastName = :lastName,
+                    s.phoneNumber = :phoneNumber,
+                    s.birthday = :birthday
+                    where s.id = :id
+                    """);
+
+            query.setParameter("id", id);
+            query.setParameter("name", student.getName());
+            query.setParameter("lastName", student.getLastName());
+            query.setParameter("phoneNumber", student.getPhoneNumber());
+            query.setParameter("birthday", student.getBirthday());
+
+            query.executeUpdate();
+        });
+    }
 }
