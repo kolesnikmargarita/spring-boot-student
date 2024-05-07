@@ -1,6 +1,10 @@
 package by.ralovets.course.students.model;
 
+import by.ralovets.course.students.annotation.ContactNumber;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -13,15 +17,22 @@ public class Student {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank(message = "Имя студента не должно быть пустым")
+    @Size(min = 2, max = 16, message = "Имя дожно быть от 2 до 16 символов")
     @Column(name = "name", nullable = false, length = 32)
     private String name;
 
+    @NotBlank(message = "Фамилия студента не должна быть пустой")
+    @Size(min = 2, max = 16, message = "Фамилия дожна быть от 2 до 16 символов")
     @Column(name = "last_name", nullable = false, length = 32)
     private String lastName;
 
+    @NotBlank(message = "Номер телефона не может быть пустым")
+    @ContactNumber(message = "Необходимо указать номер телефона от 9 до 14 цифр")
     @Column(name = "phone_number", nullable = false, length = 32)
     private String phoneNumber;
 
+    @NotNull(message = "Необходимо указать дату рождения")
     @Column(name = "birthday", nullable = false)
     private LocalDate birthday;
 

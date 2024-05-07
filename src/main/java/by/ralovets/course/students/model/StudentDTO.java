@@ -10,19 +10,19 @@ public class StudentDTO implements Serializable {
 
     private Long id;
 
-    @NotBlank(message = "Имя студента не должно быть пустым")
-    @Size(min = 2, max = 16, message = "Имя дожно быть от 2 до 16 символов")
+    //@NotBlank(message = "Имя студента не должно быть пустым")
+    //@Size(min = 2, max = 16, message = "Имя дожно быть от 2 до 16 символов")
     private String name;
 
-    @NotBlank(message = "Фамилия студента не должна быть пустой")
-    @Size(min = 2, max = 16, message = "Фамилия дожна быть от 2 до 16 символов")
+    //@NotBlank(message = "Фамилия студента не должна быть пустой")
+    //@Size(min = 2, max = 16, message = "Фамилия дожна быть от 2 до 16 символов")
     private String lastName;
 
-    @NotBlank(message = "Номер телефона не может быть пустым")
-    @ContactNumber(message = "Необходимо указать номер телефона от 9 до 14 цифр")
+    //@NotBlank(message = "Номер телефона не может быть пустым")
+    //@ContactNumber(message = "Необходимо указать номер телефона от 9 до 14 цифр")
     private String phoneNumber;
 
-    @NotNull(message = "Необходимо указать дату рождения")
+    //@NotNull(message = "Необходимо указать дату рождения")
     private LocalDate birthday;
 
     public StudentDTO() {

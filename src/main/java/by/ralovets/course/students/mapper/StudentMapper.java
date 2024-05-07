@@ -19,5 +19,15 @@ public class StudentMapper {
         return dto;
     }
 
+    public Student toEntity(StudentDTO dto) {
+        final Student entity = new Student();
 
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setLastName(dto.getLastName());
+        entity.setPhoneNumber(dto.getPhoneNumber());
+        entity.setBirthday(dto.getBirthday());
+
+        return entity;
+    }
 }
